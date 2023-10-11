@@ -1,3 +1,7 @@
+#this file contains a function that allows us to put the data that 
+#we initially have in the form of a list into a data-frame format
+
+
 transform_metadata_to_df <- function(stations_metadata) {
   stations_metadata[[1]] |> 
     map(as_tibble) |> 
