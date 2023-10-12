@@ -20,6 +20,7 @@ vol_qry <- function(id, from, to) {
       }}
     }}
   ')
-  
+  station_name <- stations_metadata_df$name[stations_metadata_df$id==id]
+  assign("station_name", station_name, envir= .GlobalEnv)
   return(query)
 }

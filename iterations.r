@@ -97,8 +97,8 @@ stations_metadata_df %>%
   transform_volumes() %>% 
   ggplot(aes(x=from, y=volume)) + 
   geom_line() + 
-  theme_classic()
-
-
-
-
+  theme_classic() +
+  labs(
+    title = glue::glue("Traffic volume for station: {station_name}"),
+    caption = "Your caption here"
+  )
