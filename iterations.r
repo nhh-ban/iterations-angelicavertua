@@ -31,7 +31,7 @@ stations_metadata <-
     .url = configs$vegvesen_url
     ) 
 
-#verify the lemght of the list
+#verify the lenght of the list
 length(stations_metadata)
 length(stations_metadata[[1]])
 stations_metadata[[1]][[1]] 
@@ -60,9 +60,30 @@ source("functions/data_tests.r")
 test_stations_metadata(stations_metadata_df)
 
 
+### 4: getting volume data
+source("functions/data_transformations.r")
+
+#verifying the correctness of iso8601 function
+to_iso8601(as_datetime("2016-09-01 10:11:12"),0)
+to_iso8601(as_datetime("2016-09-01 10:11:12"),-4)
+
+source("functions/GQL_function.r")
+source("gql-queries/vol_qry.r")
+
+GQL(
+  vol_qry(
+    id=stations_metadata_df$id[1], 
+    from=to_iso8601(stations_metadata_df$latestData[1],-4),
+    to=to_iso8601(stations_metadata_df$latestData[1],0)
+  ),
+  .url = configs$vegvesen_url
+)
+
+
 ### 5: Final volume query: 
 
 source("gql-queries/vol_qry.r")
+source("functions/data_transformations.r")
 
 stations_metadata_df %>% 
   filter(latestData > Sys.Date() - days(7)) %>% 
